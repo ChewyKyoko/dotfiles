@@ -1,0 +1,15 @@
+layer=top
+anchor=top-right
+font=FiraCode Nerd Font 10
+background-color=#191724
+text-color=#e0def4
+width=300
+height=110
+padding=10
+border-size=2
+border-color=#1f1d2e
+progress-color=over #262626ff
+border-radius=5
+default-timeout=10000
+group-by=summary
+
