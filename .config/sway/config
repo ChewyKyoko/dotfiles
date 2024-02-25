@@ -38,7 +38,7 @@ exec mako
 exec_always autotiling-rs
 
 # Wallpaper
-output * bg ~/wallpaper.jpg fill
+output * bg ~/wallpaper.png fill
 
 # Default Font
 font pango: FiraCode Nerd Font 10

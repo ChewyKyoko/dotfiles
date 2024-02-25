@@ -47,11 +47,11 @@ button {
 #clock {
     margin: 4px 2px;
     padding: 0 10px;
-    color: #f6c177;
+    color: #c4a7e7;
 }
 
 #battery {
-    color: #eb6f92;
+    color: #e0def4;
 }
 
 #battery.charging, #battery.plugged {
@@ -59,12 +59,12 @@ button {
     background-color: #31748f;
 }
 
-#wireplumber {
-    color: #e0def4;
+#pulseaudio {
+    color: #9ccfd8;
 }
 
-#wireplumber.muted {
-    color: #e0def4;
+#pulseaudio.muted {
+    color: #9ccfd8;
 }
 
 #tray {
