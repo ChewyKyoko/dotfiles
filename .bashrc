@@ -199,3 +199,4 @@ alias sudo='doas'
 alias mirror='rate-mirrors --allow-root --protocol https arch | sudo tee /etc/pacman.d/mirrorlist'
 
 eval "$(starship init bash)"
+export PATH=/home/kyoko/.local/bin:/home/kyoko/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
