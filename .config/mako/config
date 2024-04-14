@@ -1,0 +1,13 @@
+layer=top
+default-timeout=10000
+anchor=top-right
+font=FiraCode 10
+
+background-color=#191724
+text-color=#e0def4
+width=300
+height=110
+padding=10
+border-size=2
+border-radius=4
+border-color=#ebbcba
