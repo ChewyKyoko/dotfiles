@@ -1,34 +1,39 @@
 * {
-    font-family:  FiraCode;
-    font-size: 16px;
+    font-family:  Firacode Nerd Font;
 }
 
 #window {
-    margin: 0px;
-    border: 2px solid #ebbcba;
-    border-radius: 10px;
+    border: 2px solid #26233a;
+    border-radius: 8px;
     background-color: #191724;
     color:  #e0def4;
 }
 
 #input {
+    padding: 5px;	
     margin: 10px;
     background-color: #26233a;
     color: #e0def4;
-    border-radius: 15px;
-}
-
-#scroll {
-    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 2px solid #26233a;
 }
 
 #entry {
+    padding: 5px;	
     margin: 0px 10px;
 }
 
 #entry:selected {
     background-color: #26233a;
-    border-radius: 25px;
-    border: none;
+    color: #191724;
     outline: none;
+}
+
+#entry:selected * {
+    background-color: #26233a;
+    color: #c4a7e7;
+}
+
+#entry > box {
+    margin-left: 10px;
 }

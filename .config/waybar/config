@@ -1,43 +1,59 @@
 {
     "layer": "top",
-    "position": "top",
-    "height": 28,
-    "width": 1910,
-    "margin-top": 5,
-    
-    "modules-left": ["sway/workspaces"],
-    "modules-right": ["tray", "pulseaudio", "battery", "clock"],
-    
-    // MODULE CONFIG
-    
+    "height": 33,
+    "modules-left":  ["tray", "sway/workspaces"],
+    //"modules-center": ["sway/workspaces"],
+    "modules-right": ["network", "memory", "battery", "pulseaudio", "clock"],
+
+
+
     "clock": {
-        "format": "{:%R 󰃭 %d·%m·%y}",
-        "rotate": 0,
-        "tooltip-format": "<tt>{calendar}</tt>",
-},
+      "format": "   {:%I:%M %p} ",
+      "format-alt": "   {:%a, %d %b %Y} ",
+      "tooltip-format": "<tt>{calendar}</tt>"
+  },
+    "tray": {
+      "spacing": 10
+  },
+    "sway/workspaces": {
+      "disable-scroll": true,
+      "all-outputs": true,
+      "format": "{icon}",
+      "format-icons": {
+        "1": " ",
+        "2": " ",
+        "3": " ",
+        "4": " ",
+        "5": " ",
+    }
+  },
+    "network": {
+      "format-wifi": "  Online",
+      "tooltip": false,
+      "format-ethernet": "{ipaddr}/{cidr} 󰈀",
+      "format-disconnected": "NONE ",
+  },
+    "memory": {
+      "format": "RAM {}%"
+  },
     "battery": {
-        "format": "{capacity}% {icon}",
-        "rotate": 0,
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
-        "format-alt": "{time} {icon}",
-	"format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+      "format": "{capacity}% {icon}",
+      "format-charging": " {capacity}%",
+      "format-plugged": " {capacity}%",
+      "format-alt": "{time} {icon}",
+      "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
         },
     "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": "󰂲 {icon} {format_source}",
-        "format-muted": "󰝟 {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
+      "format": "{icon} {volume}",
+      "format-muted": "Muted",
+      "format-icons": {
+        "headphone": "",
+        "hands-free": "",
+        "headset": "",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": ["", "", ""]
         },
     },
 },

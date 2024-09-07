@@ -11,12 +11,12 @@ bindsym XF86MonBrightnessUp exec brightnessctl set 10%+
 bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
 
 # Ajust Volume
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_SINK@ 5%+
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_SINK@ 5%-
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 
 # Screenshots
-bindsym $mod+Shift+p exec grim -g "$(slurp)"
+bindsym $mod+Shift+p exec grim -g "$(slurp)" ~/Pictures/screenshots/screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png && notify-send "Screenshot Taken" "Saved to ~/Pictures/screenshots"
 
 # App shortcuts
 bindsym control+shift+escape exec $term htop
@@ -24,7 +24,8 @@ bindsym $mod+w exec firefox
 bindsym $mod+e exec thunar
 
 # Your preferred terminal emulator
-set $term foot
+set $term footclient
+exec foot -s
 
 # Your preferred application launcher
 set $menu wofi
@@ -39,10 +40,17 @@ exec_always autotiling
 exec pipewire
 
 # Wallpaper
-output * bg ~/wallpaper.jpg fill
+output * bg ~/wallpaper.jpeg fill
+
+# Swayidle
+
+# Touchpad
+#input "type:touchpad" {
+#    tap            enabled
+#}
 
 # Default Font
-font pango: FiraCode 10
+font pango:Noto Sans Regular 14
 
 ### Key bindings
 # Basics:
@@ -143,6 +151,28 @@ client.urgent           #e0def4 #191724 #e0def4 #eb6f92   #eb6f92
 client.placeholder      #191724 #191724 #e0def4 #26233a   #26233a
 client.background	#191724
 
+# Set floating for window roles
+for_window [window_role = "pop-up"] floating enable
+for_window [window_role = "bubble"] floating enable
+for_window [window_role = "dialog"] floating enable
+for_window [window_type = "dialog"] floating enable
+for_window [window_role = "task_dialog"] floating enable
+for_window [window_type = "menu"] floating enable
+for_window [app_id = "floating"] floating enable
+for_window [app_id = "floating_update"] floating enable, resize set width 1000px height 600px
+for_window [class = "(?i)pinentry"] floating enable
+for_window [title = "Administrator privileges required"] floating enable
+for_window [window_role = "About"] floating enable
+for_window [class="Viewnior"] floating enable, resize set 1200 800
+
+
+# Firefox
+for_window [title = "About Mozilla Firefox"] floating enable
+for_window [app_id="firefox" title="Library"] floating enable
+for_window [title="Picture in picture"] floating enable, sticky enable
+for_window [title = "Firefox - Sharing Indicator"] kill
+for_window [title="Save File"] floating enable
+
 # Set inner/outer gaps
 gaps inner 5
 gaps outer 1
@@ -178,4 +208,7 @@ bar {
 	swaybar_command waybar
 }
 
-include /etc/sway/config.d/*
+exec dbus-update-activation-environment DISPLAY I3SOCK SWAYSOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Sway
+
+# Auth with polkit-gnome
+exec "/usr/libexec/polkit-gnome-authentication-agent-1"
