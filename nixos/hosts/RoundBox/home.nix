@@ -1,3 +1,0 @@
-{
-	imports = [ ../Sakura/home.nix ];
-}
