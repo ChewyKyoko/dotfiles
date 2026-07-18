@@ -15,11 +15,11 @@ NixOS flake configuration with MangoWM and Quickshell.
 * **Screenshots:** msnap (grim + slurp + satty + wayfreeze)
 * **Audio:** pavucontrol / pwvucontrol
 * **Bluetooth:** blueman
-* **File manager:** Nautilus, Thunar
+* **File manager:** Nautilus
 * **Media:** mpv
 * **Minecraft:** Prism Launcher
 * **Screen recording:** GPU Screen Recorder
-* **Clipboard:** cliphist + wl clipboard
+* **Clipboard:** cliphist (systemd service)
 * **Lock screen:** enfield lock
 
 ## Credits
