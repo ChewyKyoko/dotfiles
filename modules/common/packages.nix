@@ -1,16 +1,6 @@
 { pkgs, ... }:
-# System-wide packages: file manager, utilities
+# System-wide packages and utilities
 {
-	programs.thunar.enable = true;
-	programs.thunar.plugins = with pkgs; [
-		thunar
-		thunar-volman
-		thunar-archive-plugin
-		thunar-media-tags-plugin
-	];
-
-	services.tumbler.enable = true;
-
 	environment.systemPackages = with pkgs; [
 		tree
 		gparted

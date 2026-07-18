@@ -40,6 +40,7 @@ let
 		focuslast = "SUPER,u,focuslast";
 		focusstack = "SUPER,Tab,focusstack,next";
 		switch_layout = "SUPER,n,switch_layout";
+		togglefloat = "SUPER,space,togglefloating,";
 	};
 
 	vim_focus = {
@@ -124,6 +125,8 @@ let
 		"SUPER+CTRL,btn_right,killclient"
 	];
 in {
+	services.cliphist.enable = true;
+
 	wayland.windowManager.mango = {
 		enable = true;
 
@@ -135,7 +138,7 @@ in {
 			drag_tile_to_tile = 1;
 			cursor_size = 24;
 
-			border_radius = 20;
+			border_radius = 13;
 			no_radius_when_single = 0;
 			borderpx = 2;
 			rootcolor = c col.base00-hex;
@@ -206,7 +209,7 @@ in {
 			focus_cross_monitor = 0;
 			focus_cross_tag = 0;
 
-			enable_floating_snap = 0;
+			enable_floating_snap = 1;
 			snap_distance = 30;
 			scratchpad_width_ratio = 0.8;
 			scratchpad_height_ratio = 0.9;
@@ -230,11 +233,11 @@ in {
 			mouse_natural_scrolling = 0;
 
 			windowrule = [
-				"isfloating:1,appid:org.gnome.Nautilus"
-				"isfloating:1,appid:pwvucontrol"
-				"isfloating:1,appid:blueman-manager"
-				"isfloating:1,appid:nm-connection-editor"
-				"isfloating:1,appid:xdg-desktop-portal"
+				"isfloating:1,width:0.8,height:0.8,appid:org.gnome.Nautilus"
+				"isfloating:1,width:0.8,height:0.8,appid:pwvucontrol"
+				"isfloating:1,width:0.8,height:0.8,appid:blueman-manager"
+				"isfloating:1,width:0.8,height:0.8,appid:nm-connection-editor"
+				"isfloating:1,width:0.8,height:0.8,appid:xdg-desktop-portal"
 				"isfloating:1,title:Picture-in-Picture"
 				"isfloating:1,title:Save As..."
 				"isfloating:1,title:Open File..."
@@ -242,7 +245,6 @@ in {
 				"isfloating:1,title:Properties"
 				"isfloating:1,title:Preferences"
 				"isfloating:1,appid:mpv"
-				"isfloating:1,appid:steam"
 			];
 
 			tagrule = map (n: "id:${toString n},layout_name:tile") (lib.range 1 6);
@@ -281,6 +283,7 @@ in {
 				nav.focuslast
 				nav.focusstack
 				nav.switch_layout
+				nav.togglefloat
 				vim_focus.left
 				vim_focus.down
 				vim_focus.up
@@ -347,8 +350,6 @@ in {
 			cat > "$CACHE_DIR/wallpaper-state.json" << EOF
 {"wallpaper_path": "$WALLPAPER"}
 EOF
-			cliphist &
-			wl-clip-persist --clipboard regular --reconnect-tries 0 &
 			quickshell --config quickshell &
 		'';
 	};

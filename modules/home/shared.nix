@@ -103,12 +103,10 @@
 		slurp
 		satty
 		wget
-		cliphist
 		playerctl
 		brightnessctl
 		papirus-icon-theme
 		wl-clipboard
-		wl-clip-persist
 		ffmpeg
 		nautilus
 		nodejs

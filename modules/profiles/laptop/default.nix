@@ -52,7 +52,7 @@
 		"i915.enable_fbc=1"            # ~0.1W — framebuffer compression
 		"i915.enable_dc=4"             # ~0.1W — deep display power states
 		"iwlwifi.power_save=1"         # ~0.2W — Wi-Fi power save
-		"snd_hda_intel.power_save=1"   # ~0.1W — audio codec power save
+		"snd_hda_intel.power_save=0"   # audio codec — disabled, was causing mic/audio glitches
 		"acpi.ec_no_wakeup=1"          # ~0.1W — prevent EC spurious wakeups (ThinkPad)
 		"usbcore.autosuspend=5"        # USB devices autosuspend after 5s idle
 
