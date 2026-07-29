@@ -2,6 +2,13 @@
 name: pr-readiness
 description: Validate local changes from final diff through merge readiness, including project gates, code audit with improve skill, CI, review, thread resolution, and manual-test evidence. Use when asked to review uncommitted work, prepare a pull request, check whether a PR is ready, address review feedback, or verify merge readiness.
 ---
+license: MIT
+metadata:
+  author: ChewyKyoko (adapted from Chris Titus Tech's titus-ai)
+  source: https://github.com/ChrisTitusTech/titus-ai
+  description: FOSS port — replaces CodeRabbit with improve (shadcn) for code audit
+
+---
 
 # PR Readiness
 
