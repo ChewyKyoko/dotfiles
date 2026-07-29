@@ -114,6 +114,7 @@
 		godot_4
 		godot-mcp
 		msnap
+		jq               # JSON parsing (msnap dep)
 		libnotify        # notify-send (msnap dep)
 		wayfreeze        # screen freeze before capture (msnap dep)
 		gpu-screen-recorder  # screencast recording (msnap dep)

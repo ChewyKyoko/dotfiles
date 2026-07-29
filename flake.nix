@@ -49,6 +49,14 @@
 						inherit (prev) libxcb xcbutilwm;
 					};
 				})
+				# Add libglvnd to RPATH so libEGL.so.1 is found via setcap wrapper (bypasses shell script LD_LIBRARY_PATH)
+				(final: prev: {
+					gpu-screen-recorder = prev.gpu-screen-recorder.overrideAttrs (old: {
+						postFixup = (old.postFixup or "") + ''
+							patchelf --add-rpath ${prev.libglvnd}/lib $out/bin/.wrapped/gpu-screen-recorder
+						'';
+					});
+				})
 				mangowm.overlays.default
 				(import ./pkgs { inherit mangowm; })
 				msnap.overlays.default
