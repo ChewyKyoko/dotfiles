@@ -49,6 +49,7 @@
 			- **ponytail** (plugin): lazy senior dev mode. Write only what the task needs — YAGNI, stdlib, native platform first. Use `/ponytail` to set level.
 			- **improve** (skill): codebase auditor by shadcn. Use `/improve` to audit and produce implementation plans. Read-only — never modifies source.
 			- **nixos-best-practices** (skill): NixOS best practices reference. Use when writing or reviewing NixOS config.
+			- **pr-readiness** (skill): Validate changes from diff through merge readiness. Runs improve audit, local gates, and checks CI/review state before merge.
 		'';
 
 		agents = {
@@ -196,6 +197,7 @@
 		};
 
 		skills = {
+			"pr-readiness" = "${../../skills/pr-readiness}";
 			improve = "${(pkgs.fetchFromGitHub {
 				owner = "shadcn";
 				repo = "improve";

@@ -1,0 +1,52 @@
+---
+name: pr-readiness
+description: Validate local changes from final diff through merge readiness, including project gates, code audit with improve skill, CI, review, thread resolution, and manual-test evidence. Use when asked to review uncommitted work, prepare a pull request, check whether a PR is ready, address review feedback, or verify merge readiness.
+---
+
+# PR Readiness
+
+## Workflow
+
+1. Read applicable repository instructions, config, and the diff.
+2. Inspect the branch, worktree, untracked files, and complete diff. Separate unrelated pre-existing changes from the requested change.
+3. Run focused checks, then the repository's complete local verification gate. Record exact commands, results, skipped checks, and residual risk.
+4. Run the **improve** skill with the `branch` variant for code review:
+
+   ```
+   /improve branch
+   ```
+
+   Let the audit finish. Fix actionable findings, add test coverage when practical, rerun affected verification, and repeat the audit. Explain verified false positives without changing correct code.
+5. Commit, push, or open a pull request only when the user authorized those state changes. Keep the PR draft while known gates or manual tests remain.
+6. For a published PR, verify checks and reviews against the latest commit via the GitHub MCP server. Inspect thread-level resolution state rather than relying only on flat comments.
+7. Require a fresh independent review. The builder's self-review and a green CI run do not replace it.
+8. Complete and document the repository's manual-test checklist on the real target environment when practical.
+9. Recheck the final diff, required checks, reviews, and unresolved threads after every push.
+
+## Hard Gates
+
+Do not report a pull request as ready to merge while any of these remain:
+
+- required CI is failed, pending, missing, or attached to an older commit
+- actionable `improve` audit findings are unresolved
+- a required independent review is incomplete
+- required manual testing is incomplete or undocumented
+- the branch contains unrelated changes, secrets, debug code, or generated junk
+- planning documents no longer match the implementation
+
+Do not perform the merge unless the user explicitly requests it. Never fabricate commit hashes, review state, commands, or test results. For uncommitted work, report `HEAD` together with worktree and untracked-file state. When no pull request exists, report remote checks, reviews, threads, and PR status as not applicable.
+
+## Pull Request Evidence
+
+Ensure the PR records:
+
+- the problem and implemented approach
+- important decisions and deviations from the plan
+- exact automated checks that passed
+- manual tests and their environment
+- screenshots or recordings for visible changes
+- known limitations, skipped validation, and follow-up work
+
+## Final Report
+
+Report `HEAD`, worktree and untracked-file state, changed-file scope, local checks, manual-test state, and remaining blockers. For a published pull request, also report its latest commit, remote checks, review state, unresolved threads, and whether it is draft, review-ready, or merge-ready.
