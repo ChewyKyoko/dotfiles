@@ -103,7 +103,6 @@
 		slurp
 		satty
 		wget
-		playerctl
 		brightnessctl
 		papirus-icon-theme
 		wl-clipboard
@@ -111,9 +110,7 @@
 		nautilus
 		nodejs
 		gh
-		python3
 		uv
-		llama-cpp-vulkan
 		godot_4
 		godot-mcp
 		msnap

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 # System services: PipeWire, llama-cpp, fwupd, libinput
 {
 	services = {
@@ -26,16 +26,6 @@
 		llama-cpp = {
 			enable = true;
 			package = pkgs.llama-cpp-vulkan;
-			modelsPreset = {
-				"Qwen3.5-2B" = {
-					hf-repo = "unsloth/Qwen3.5-2B-GGUF";
-					hf-file = "Qwen3.5-2B-Q4_K_M.gguf";
-					alias = "qwen3.5-2b";
-					ngl = 99;
-					cont-batching = true;
-					flash-attn = true;
-				};
-			};
 		};
 	};
 
@@ -46,4 +36,7 @@
 	};
 
 	environment.systemPackages = [ pkgs.llama-cpp-vulkan ];
+
+	# Don't auto-start — start manually with `systemctl start llama-cpp`
+	systemd.services.llama-cpp.wantedBy = lib.mkForce [ ];
 }

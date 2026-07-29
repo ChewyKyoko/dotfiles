@@ -7,7 +7,7 @@ let
 	launch = {
 		terminal   = "SUPER,Return,spawn,footclient";
 		bluetooth  = "SUPER,b,spawn,blueman-manager";
-		wifi       = "SUPER,w,spawn,iwgtk";
+		wifi       = "SUPER,w,spawn,nm-connection-editor";
 		audio      = "SUPER,v,spawn,pwvucontrol";
 		files      = "SUPER,e,spawn,nautilus";
 	};

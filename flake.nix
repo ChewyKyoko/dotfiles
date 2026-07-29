@@ -14,7 +14,10 @@
 			url = "github:nix-community/home-manager/release-26.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-		stylix.url = "github:nix-community/stylix/release-26.05";
+		stylix = {
+			url = "github:nix-community/stylix/release-26.05";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 		quickshell = {
 			url = "github:quickshell-mirror/quickshell/d99d87d5e5ec4e696815348692fdaaf0b6be1b2c";
 			inputs.nixpkgs.follows = "nixpkgs";

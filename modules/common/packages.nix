@@ -8,7 +8,6 @@
 		playerctl
 		blueman
 		pwvucontrol
-		playwright-mcp
 	];
 
 	}

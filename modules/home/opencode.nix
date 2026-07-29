@@ -6,7 +6,6 @@
 		extraPackages = with pkgs; [
 			ydotool
 			llama-cpp-vulkan
-			playwright-mcp
 			nodejs
 		];
 
@@ -30,7 +29,7 @@
 			- Keep functions small and focused.
 
 			# Local LLM
-			Local AI backend: llama.cpp + Qwen3.5 2B Q4_K_M on port 8080 (systemd service).
+			Local AI backend: llama.cpp + MiniCPM5-1B on port 8080 (systemd service).
 			Intel Arc GPU via Vulkan for acceleration. 8K context.
 			Start/stop: `systemctl start/stop llama-cpp`.
 			OpenAI-compatible API at http://127.0.0.1:8080/v1
@@ -41,9 +40,15 @@
 			Helper scripts: `gdev` (editor), `grun` (run), `gclean` (clean), `gmcp` (MCP server).
 			Default project: ~/godot-ai/test_project. Use `@godot` agent for game development.
 
+			# MCP servers
+			- **context7** (MCP, local, fetches remote docs): up-to-date library docs. Use its tools before guessing any API.
+			- **github** (MCP, remote): GitHub API via Copilot. Needs `GITHUB_PERSONAL_ACCESS_TOKEN` env var.
+			- **godot** (MCP, local): Godot 4 scene/script operations.
+
 			# Installed plugins/skills
 			- **ponytail** (plugin): lazy senior dev mode. Write only what the task needs — YAGNI, stdlib, native platform first. Use `/ponytail` to set level.
 			- **improve** (skill): codebase auditor by shadcn. Use `/improve` to audit and produce implementation plans. Read-only — never modifies source.
+			- **nixos-best-practices** (skill): NixOS best practices reference. Use when writing or reviewing NixOS config.
 		'';
 
 		agents = {
@@ -94,7 +99,7 @@
 				description: Start the local LLM server
 				---
 
-				Start the llama.cpp systemd service with Qwen3.5 2B for AI-assisted coding.
+				Start the llama.cpp systemd service with MiniCPM5-1B for AI-assisted coding.
 				Runs `systemctl start llama-cpp` to launch llama-server on port 8080.
 				Uses Intel Arc GPU via Vulkan for acceleration.
 				Context: 8K tokens, optimized for code completion and chat.
@@ -105,7 +110,7 @@
 				---
 
 				Stop the llama.cpp server gracefully.
-				Runs `~/ai/bin/stop-llama.sh`.
+				Runs `systemctl stop llama-cpp`.
 			'';
 			gdev = ''
 				---
@@ -134,9 +139,62 @@
 			'';
 		};
 
-		# ponytail: HM's programs.opencode can't express provider/model+mcp via settings,
-		# so those are in a direct file at ~/.config/opencode/opencode.json
-		# keeping skills here for now as HM supports it
+		settings = {
+			provider = {
+				local-llama = {
+					npm = "@ai-sdk/openai-compatible";
+					name = "Local Llama";
+					options = {
+						baseURL = "http://127.0.0.1:8080/v1";
+						apiKey = "not-needed";
+					};
+					models = {
+						MiniCPM5-1B = {
+							id = "MiniCPM5-1B";
+							name = "MiniCPM5 1B (Local)";
+							family = "llama";
+							limit = {
+								context = 8192;
+								output = 8192;
+							};
+							interleaved = true;
+							tool_call = true;
+							temperature = true;
+							request.body.chat_template_kwargs = {
+								enable_thinking = true;
+							};
+						};
+					};
+				};
+			};
+			model = "local-llama/MiniCPM5-1B";
+			mcp = {
+				godot = {
+					command = [ "godot-mcp" ];
+					enabled = true;
+					type = "local";
+				};
+				context7 = {
+					type = "local";
+					command = [ "npx" "-y" "@upstash/context7-mcp@latest" ];
+					enabled = true;
+				};
+				github = {
+					type = "remote";
+					url = "https://api.githubcopilot.com/mcp/";
+					enabled = true;
+					oauth = false;
+					headers = {
+						"Authorization" = "Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}";
+					};
+				};
+			};
+			plugin = [
+				"@dietrichgebert/ponytail"
+				"github:obra/superpowers"
+			];
+		};
+
 		skills = {
 			improve = "${(pkgs.fetchFromGitHub {
 				owner = "shadcn";
@@ -144,6 +202,12 @@
 				rev = "03369ee6d7cafbfcecc4346539b05b3dc0a603bb";
 				hash = "sha256-m0a1n8xguDI2nooJ856sWPofh+tZI5VvIrVZrQH6XgY=";
 			})}/skills/improve";
+			"nixos-best-practices" = "${(pkgs.fetchFromGitHub {
+				owner = "lihaoze123";
+				repo = "my-claude-code";
+				rev = "03a65e39a21137a5091738b79d3731ee83bda13a";
+				hash = "sha256-jKdSnasUZcX1LBYBXu2bM3Cv6F/McgkByxvzwVire8w=";
+			})}/skills/nixos-best-practices";
 		};
 	};
 
