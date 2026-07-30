@@ -4,6 +4,7 @@
 	imports = [
 		./nvf.nix
 		./vesktop.nix
+		./zen-browser.nix
 	];
 
 	home.username = "kyoko";
@@ -80,6 +81,14 @@
 		base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark.yaml";
 		image = ../../assets/wallpaper.jpg;
 		polarity = "dark";
+		fonts = {
+			sizes = {
+				applications = 14;
+				desktop = 14;
+				popups = 14;
+				terminal = 14;
+			};
+		};
 		targets.starship.enable = true;
 	};
 

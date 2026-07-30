@@ -22,17 +22,21 @@
 			url = "github:quickshell-mirror/quickshell/d99d87d5e5ec4e696815348692fdaaf0b6be1b2c";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-		betterfox-nix = {
-			url = "github:HeitorAugustoLN/betterfox-nix";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
 		msnap = {
 			url = "github:xtheeq/msnap";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		zen-browser = {
+			url = "github:0xc000022070/zen-browser-flake";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+		firefox-addons = {
+			url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
-	outputs = inputs@{ self, nixpkgs, home-manager, stylix, mangowm, nvf, quickshell, betterfox-nix, msnap, ... }:
+	outputs = inputs@{ self, nixpkgs, home-manager, stylix, mangowm, nvf, quickshell, msnap, zen-browser, firefox-addons, ... }:
 	let
 		system = "x86_64-linux";
 
@@ -60,12 +64,8 @@
 				mangowm.overlays.default
 				(import ./pkgs { inherit mangowm; })
 				msnap.overlays.default
-				# Build quickshell from source (pass libxcb directly, not via deprecated xorg attrset)
 				(final: prev: {
-					quickshell = final.callPackage (quickshell.outPath + "/default.nix") {
-						xorg = {};
-						libxcb = final.libxcb;
-					};
+					zen-browser = zen-browser.packages.${system}.default;
 				})
 			];
 		};
@@ -84,9 +84,10 @@
 					home-manager.users.${user} = { imports = [
 						(import ./hosts/${hostName}/home.nix)
 						mangowm.hmModules.mango
+						zen-browser.homeModules.beta
 					]; };
 					home-manager.backupFileExtension = "backup";
-					home-manager.extraSpecialArgs = { inherit nvf quickshell mangowm betterfox-nix msnap; };
+					home-manager.extraSpecialArgs = { inherit nvf quickshell mangowm msnap firefox-addons; };
 				}
 			];
 		};
@@ -96,8 +97,9 @@
 				stylix.homeModules.stylix
 				(import ./hosts/${hostName}/home.nix)
 				mangowm.hmModules.mango
+				zen-browser.homeModules.beta
 			];
-			extraSpecialArgs = { inherit nvf quickshell mangowm betterfox-nix msnap; };
+			extraSpecialArgs = { inherit nvf quickshell mangowm msnap firefox-addons; };
 		};
 	in {
 		nixosConfigurations = {
@@ -113,6 +115,7 @@
 		packages.${system} = {
 			mangowc = pkgs.mangowc;
 			mangowc-unwrapped = pkgs.mangowc-unwrapped;
+			inherit (zen-browser.packages.${system}) default;
 		};
 	};
 }

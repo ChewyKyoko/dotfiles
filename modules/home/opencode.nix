@@ -38,7 +38,7 @@
 			Godot 4 + godot-mcp (Coding-Solo/godot-mcp) for AI-assisted game dev.
 			MCP server runs on stdio, managed by OpenCode automatically.
 			Helper scripts: `gdev` (editor), `grun` (run), `gclean` (clean), `gmcp` (MCP server).
-			Default project: ~/godot-ai/test_project. Use `@godot` agent for game development.
+			Default project: ~/godot-ai/test_project.
 
 			# MCP servers
 			- **context7** (MCP, local, fetches remote docs): up-to-date library docs. Use its tools before guessing any API.
@@ -49,105 +49,9 @@
 			- **ponytail** (plugin): lazy senior dev mode. Write only what the task needs — YAGNI, stdlib, native platform first. Use `/ponytail` to set level.
 			- **improve** (skill): codebase auditor by shadcn. Use `/improve` to audit and produce implementation plans. Read-only — never modifies source.
 			- **nixos-best-practices** (skill): NixOS best practices reference. Use when writing or reviewing NixOS config.
-			- **ai-project-manager** (skill): Generate SPEC/ROADMAP/TASKS into any project dir, manage phase execution with approval checkpoints. Use when planning a big project or coordinating phases.
+			- **project-architect** (skill): Converts ideas into structured, documented, AI-ready project repositories. Use when starting a new project.
 			- **pr-readiness** (skill): Validate changes from diff through merge readiness. Runs improve audit, local gates, and checks CI/review state before merge.
 		'';
-
-		agents = {
-			nix = ''
-				You are a NixOS and Home Manager specialist.
-				- Write correct, idiomatic Nix expressions.
-				- Always verify packages exist in nixpkgs before suggesting them.
-				- Prefer Home Manager options over raw dotfiles.
-				- When writing modules, follow the standard NixOS module pattern with `options` and `config`.
-			'';
-			godot = ''
-				You are a Godot 4 and GDScript specialist with access to the godot-mcp server.
-
-				Available tools (via the godot MCP server):
-				- `open_godot` — Launch Godot editor with a project. Args: projectPath (required).
-				- `run_project` — Run a Godot project in debug mode. Args: projectPath (required).
-				- `stop_project` — Stop a running project.
-				- `get_output` — Get debug output from the last run.
-				- `get_godot_version` — Check the installed Godot version.
-				- `get_project_info` — Get project metadata from project.godot.
-				- `list_projects` — Find Godot projects in a directory.
-				- `get_scene_tree` — Read the scene tree of a scene file. Args: scenePath (required).
-				- `create_scene` — Create a new scene with a root node. Args: projectPath, scenePath, rootNodeType.
-				- `add_node` — Add a node to an existing scene. Args: scenePath, nodeType, nodeName, parentPath.
-				- `create_script` — Create a GDScript file. Args: scriptPath, content.
-				- `edit_script` — Edit an existing GDScript file. Args: scriptPath, content.
-				- `save_scene` — Save the current scene. Args: scenePath.
-				- `load_texture` — Load a texture into a Sprite2D node. Args: scenePath, nodePath, texturePath.
-
-				Default project: ~/godot-ai/test_project
-
-				Use the MCP tools to inspect, edit, and test the project. Do NOT use shell commands for Godot operations — use the MCP tools.
-				For manual editor access, the user runs `gdev` (open editor), `grun` (run project), `gclean` (clean cache).
-			'';
-			linux-sysadmin = ''
-				You are a Linux system administrator and NixOS specialist.
-				- Diagnose system issues using journalctl, dmesg, systemctl, ps, top, lsof
-				- Check config files, permissions, and service states before suggesting fixes
-				- Prefer declarative NixOS config over imperative workarounds
-				- Always check logs first, then config, then propose a fix
-				- For NixOS-specific issues, consult nixos-best-practices skill
-			'';
-		};
-
-		commands = {
-			capture-screen = ''
-				---
-				description: Capture a screenshot
-				---
-
-				Capture a screenshot of the current screen using grim. Save to ~/screenshots/ with a timestamp filename.
-				Then describe what you see in the screenshot.
-			'';
-			start-llama = ''
-				---
-				description: Start the local LLM server
-				---
-
-				Start the llama.cpp systemd service with MiniCPM5-1B for AI-assisted coding.
-				Runs `systemctl start llama-cpp` to launch llama-server on port 8080.
-				Uses Intel Arc GPU via Vulkan for acceleration.
-				Context: 8K tokens, optimized for code completion and chat.
-			'';
-			stop-llama = ''
-				---
-				description: Stop the local LLM server
-				---
-
-				Stop the llama.cpp server gracefully.
-				Runs `systemctl stop llama-cpp`.
-			'';
-			gdev = ''
-				---
-				description: Open Godot editor
-				---
-
-				Open the Godot editor with the default project.
-				Runs `gdev` which calls `godot -e --path <project>`.
-				The project path defaults to ~/godot-ai/test_project.
-			'';
-			grun = ''
-				---
-				description: Run Godot project
-				---
-
-				Run the Godot project in debug mode.
-				Runs `grun` which calls `godot --path <project>`.
-			'';
-			gclean = ''
-				---
-				description: Clean Godot cache
-				---
-
-				Remove .godot/ and .import/ directories from the project.
-				Runs `gclean`.
-			'';
-		};
 
 		settings = {
 			provider = {
@@ -199,12 +103,11 @@
 			};
 			plugin = [
 				"@dietrichgebert/ponytail"
-				"github:obra/superpowers"
 			];
 		};
 
 		skills = {
-			"ai-project-manager" = "${../../skills/ai-project-manager}";
+			"project-architect" = "${../../skills/project-architect}";
 			"pr-readiness" = "${../../skills/pr-readiness}";
 			improve = "${(pkgs.fetchFromGitHub {
 				owner = "shadcn";
