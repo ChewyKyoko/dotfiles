@@ -319,21 +319,7 @@ in {
 		};
 
 		systemd = {
-			enable = true;
-			xdgAutostart = true;
-			variables = [
-				"DISPLAY"
-				"WAYLAND_DISPLAY"
-				"XDG_CURRENT_DESKTOP"
-				"XDG_SESSION_TYPE"
-				"NIXOS_OZONE_WL"
-				"QT_QPA_PLATFORMTHEME"
-				"QT_AUTO_SCREEN_SCALE_FACTOR"
-				"QT_WAYLAND_FORCE_DPI"
-				"QT_QPA_PLATFORM"
-				"XCURSOR_THEME"
-				"XCURSOR_SIZE"
-			];
+			enable = false;
 		};
 
 		autostart_sh = ''

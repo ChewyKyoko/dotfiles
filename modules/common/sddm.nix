@@ -15,20 +15,23 @@ let
 			cp -r $src/font $out/share/sddm/themes/enfield/
 		'';
 	};
-in
-{
-	services.displayManager.sddm = {
-		enable = true;
-		wayland.enable = true;
-		theme = "enfield";
-		package = pkgs.kdePackages.sddm;
-		extraPackages = [
-			enfield-sddm
-			pkgs.kdePackages.qt5compat
-			pkgs.kdePackages.qtmultimedia
-			pkgs.kdePackages.qtsvg
-			pkgs.kdePackages.qtvirtualkeyboard
-		];
+in {
+	services.displayManager = {
+		defaultSession = "mango-uwsm";
+
+		sddm = {
+			enable = true;
+			wayland.enable = true;
+			theme = "enfield";
+			package = pkgs.kdePackages.sddm;
+			extraPackages = [
+				enfield-sddm
+				pkgs.kdePackages.qt5compat
+				pkgs.kdePackages.qtmultimedia
+				pkgs.kdePackages.qtsvg
+				pkgs.kdePackages.qtvirtualkeyboard
+			];
+		};
 	};
 
 	environment.systemPackages = [

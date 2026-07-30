@@ -49,6 +49,7 @@
 			- **ponytail** (plugin): lazy senior dev mode. Write only what the task needs — YAGNI, stdlib, native platform first. Use `/ponytail` to set level.
 			- **improve** (skill): codebase auditor by shadcn. Use `/improve` to audit and produce implementation plans. Read-only — never modifies source.
 			- **nixos-best-practices** (skill): NixOS best practices reference. Use when writing or reviewing NixOS config.
+			- **ai-project-manager** (skill): Generate SPEC/ROADMAP/TASKS into any project dir, manage phase execution with approval checkpoints. Use when planning a big project or coordinating phases.
 			- **pr-readiness** (skill): Validate changes from diff through merge readiness. Runs improve audit, local gates, and checks CI/review state before merge.
 		'';
 
@@ -83,6 +84,14 @@
 
 				Use the MCP tools to inspect, edit, and test the project. Do NOT use shell commands for Godot operations — use the MCP tools.
 				For manual editor access, the user runs `gdev` (open editor), `grun` (run project), `gclean` (clean cache).
+			'';
+			linux-sysadmin = ''
+				You are a Linux system administrator and NixOS specialist.
+				- Diagnose system issues using journalctl, dmesg, systemctl, ps, top, lsof
+				- Check config files, permissions, and service states before suggesting fixes
+				- Prefer declarative NixOS config over imperative workarounds
+				- Always check logs first, then config, then propose a fix
+				- For NixOS-specific issues, consult nixos-best-practices skill
 			'';
 		};
 
@@ -161,9 +170,7 @@
 							interleaved = true;
 							tool_call = true;
 							temperature = true;
-							request.body.chat_template_kwargs = {
-								enable_thinking = true;
-							};
+
 						};
 					};
 				};
@@ -197,6 +204,7 @@
 		};
 
 		skills = {
+			"ai-project-manager" = "${../../skills/ai-project-manager}";
 			"pr-readiness" = "${../../skills/pr-readiness}";
 			improve = "${(pkgs.fetchFromGitHub {
 				owner = "shadcn";

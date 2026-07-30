@@ -69,11 +69,6 @@ in
 		};
 	};
 
-	# Protect MangoWM from OOM killer
-	systemd.user.services."wayland-wm@mango" = {
-		serviceConfig.OOMScoreAdjust = -1000;
-	};
-
 	programs.nh = {
 		enable = true;
 		flake = "/etc/nixos";
