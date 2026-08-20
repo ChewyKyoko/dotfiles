@@ -1,9 +1,12 @@
 { pkgs, ... }:
-# Home config shared by all hosts: shells, packages, godot scripts
-{
+let
+	tokyoNightCSS = pkgs.fetchurl {
+		url = "https://raw.githubusercontent.com/Dyzean/Tokyo-Night/main/themes/tokyo-night.theme.css";
+		hash = "sha256-fHEAihqI0UlrM0KOdvUaBukgH+GA82fetqFHMOckVRk=";
+	};
+in {
 	imports = [
 		./nvf.nix
-		./vesktop.nix
 		./zen-browser.nix
 	];
 
@@ -76,20 +79,16 @@
 		};
 	};
 
-	stylix = {
+	stylix.targets.starship.enable = true;
+
+	home.file.".config/vesktop/themes/tokyo-night.css".source = tokyoNightCSS;
+
+	programs.quickshell = {
 		enable = true;
-		base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyodark.yaml";
-		image = ../../assets/wallpaper.jpg;
-		polarity = "dark";
-		fonts = {
-			sizes = {
-				applications = 14;
-				desktop = 14;
-				popups = 14;
-				terminal = 14;
-			};
-		};
-		targets.starship.enable = true;
+		package = pkgs.quickshell;
+		configs.quickshell = ./quickshell/conf;
+		activeConfig = "quickshell";
+		systemd.enable = false;
 	};
 
 	gtk = {

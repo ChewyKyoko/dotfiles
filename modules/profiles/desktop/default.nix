@@ -6,7 +6,6 @@
 		../../common/network.nix
 		../../common/services.nix
 		../../common/desktop.nix
-		../../common/packages.nix
 		../../common/sddm.nix
 		../../virtualisation.nix
 		../../system/performance.nix

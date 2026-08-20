@@ -20,4 +20,6 @@ in {
 	});
 
 	mangowc = final.callPackage ./mangowm.nix { };
+
+	enfield = final.callPackage ./enfield.nix { };
 }

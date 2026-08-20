@@ -19,14 +19,14 @@ let
 		installPhase = ''
 			mkdir -p $out/share/enfield-lock
 			cp $src/lock_shell.qml $out/share/enfield-lock/
-			cp -r $src/shim $out/share/enfield-lock/
-			cp -r $src/imports $out/share/enfield-lock/
+			ln -sf ${pkgs.enfield}/share/enfield/shim $out/share/enfield-lock/shim
+			ln -sf ${pkgs.enfield}/share/enfield/imports $out/share/enfield-lock/imports
 			mkdir -p $out/share/enfield-lock/themes/enfield
-			cp $src/bg.mp4 $out/share/enfield-lock/themes/enfield/
-			cp $src/Main.qml $out/share/enfield-lock/themes/enfield/
-			cp $src/BackgroundVideo.qml $out/share/enfield-lock/themes/enfield/
-			cp $src/theme.conf $out/share/enfield-lock/themes/enfield/
-			cp $src/metadata.desktop $out/share/enfield-lock/themes/enfield/
+			ln -sf ${pkgs.enfield}/share/enfield/bg.mp4 $out/share/enfield-lock/themes/enfield/bg.mp4
+			ln -sf ${pkgs.enfield}/share/enfield/Main.qml $out/share/enfield-lock/themes/enfield/Main.qml
+			ln -sf ${pkgs.enfield}/share/enfield/BackgroundVideo.qml $out/share/enfield-lock/themes/enfield/BackgroundVideo.qml
+			ln -sf ${pkgs.enfield}/share/enfield/theme.conf $out/share/enfield-lock/themes/enfield/theme.conf
+			ln -sf ${pkgs.enfield}/share/enfield/metadata.desktop $out/share/enfield-lock/themes/enfield/metadata.desktop
 
 			makeWrapper ${pkgs.quickshell}/bin/quickshell $out/bin/qylock-lock \
 				--add-flags "-p $out/share/enfield-lock/lock_shell.qml" \
