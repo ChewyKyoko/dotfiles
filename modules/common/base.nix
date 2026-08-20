@@ -58,6 +58,12 @@
 
 	environment.systemPackages = with pkgs; [
 		hicolor-icon-theme
+		tree
+		gparted
+		file-roller
+		playerctl
+		blueman
+		pwvucontrol
 	];
 
 	system.stateVersion = "26.05";
