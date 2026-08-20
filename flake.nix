@@ -47,13 +47,11 @@
 				# ponytail: allowAliases=true needed for wlroots attr
 			};
 			overlays = [
-				# Provide xorg with non-deprecated attr aliases for upstream overlays
 				(final: prev: {
 					xorg = {
 						inherit (prev) libxcb xcbutilwm;
 					};
 				})
-				# Add libglvnd to RPATH so libEGL.so.1 is found via setcap wrapper (bypasses shell script LD_LIBRARY_PATH)
 				(final: prev: {
 					gpu-screen-recorder = prev.gpu-screen-recorder.overrideAttrs (old: {
 						postFixup = (old.postFixup or "") + ''
@@ -64,9 +62,6 @@
 				mangowm.overlays.default
 				(import ./pkgs { inherit mangowm; })
 				msnap.overlays.default
-				(final: prev: {
-					zen-browser = zen-browser.packages.${system}.default;
-				})
 			];
 		};
 
@@ -82,7 +77,7 @@
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
 					home-manager.users.${user} = { imports = [
-						(import ./hosts/${hostName}/home.nix)
+						(import ./hosts/Sakura/home.nix)
 						mangowm.hmModules.mango
 						zen-browser.homeModules.beta
 					]; };
@@ -95,7 +90,7 @@
 			inherit pkgs;
 			modules = [
 				stylix.homeModules.stylix
-				(import ./hosts/${hostName}/home.nix)
+				(import ./hosts/Sakura/home.nix)
 				mangowm.hmModules.mango
 				zen-browser.homeModules.beta
 			];

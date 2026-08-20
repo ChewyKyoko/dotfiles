@@ -12,12 +12,12 @@ in {
 
 	mangowc-unwrapped = mangowc-unwrapped-drv.overrideAttrs (old: {
 		postInstall = (old.postInstall or "") + ''
-			# Remove the plain mango.desktop to avoid duplicate SDDM entries
-			# (UWSM generates its own session entry under "Mango (UWSM)")
 			rm -f $out/share/wayland-sessions/mango.desktop
 			rmdir $out/share/wayland-sessions 2>/dev/null || true
 		'';
 	});
 
 	mangowc = final.callPackage ./mangowm.nix { };
+
+	enfield = final.callPackage ./enfield.nix { };
 }
