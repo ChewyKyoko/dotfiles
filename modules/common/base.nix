@@ -1,6 +1,10 @@
 { pkgs, ... }:
 # Base system config shared by all hosts
 {
+	imports = [
+		../system/security.nix
+	];
+
 	boot = {
 		kernelPackages = pkgs.linuxPackages_latest;
 		initrd.systemd.enable = true;
