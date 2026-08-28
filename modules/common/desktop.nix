@@ -38,6 +38,8 @@ let
 	};
 in
 {
+	imports = [ ../desktop/steam.nix ];
+
 	programs.uwsm = {
 		enable = true;
 		package = uwsmWithPlugin;
@@ -52,7 +54,18 @@ in
 
 	# Tell the upstream mango module not to create a plain SDDM entry
 	# (UWSM generates "Mango (UWSM)" — we only want that one)
+	programs.mango.enable = true;
 	programs.mango.addLoginEntry = false;
+
+	# GameMode system service (not just user package)
+	programs.gamemode.enable = true;
+	programs.gamemode.settings.general.inhibit_screensaver = 0;
+
+	# Gamescope micro-compositor for gaming
+	programs.gamescope.enable = true;
+	programs.gamescope.capSysNice = true;
+
+	desktop.steam.enable = true;
 
 	programs.xwayland.enable = true;
 

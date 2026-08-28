@@ -5,7 +5,6 @@
 
 		extraPackages = with pkgs; [
 			ydotool
-			llama-cpp-vulkan
 			nodejs
 		];
 

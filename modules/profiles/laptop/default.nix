@@ -7,33 +7,12 @@
 		../../common/services.nix
 		../../common/desktop.nix
 		../../common/sddm.nix
-		../../virtualisation.nix
 		../../system/performance.nix
 		../../hardware/gpu/intel.nix
 		../../hardware/thinkpad.nix
-		../../desktop/steam.nix
 	];
 
 	networking.hostName = "Sakura";
-
-	virtualisation.enable = false;
-	desktop.steam.enable = true;
-	programs.mango.enable = true;
-
-	# GameMode system service (not just user package)
-	programs.gamemode.enable = true;
-	programs.gamemode.settings.general.inhibit_screensaver = 0;
-
-	# Gamescope micro-compositor for gaming
-	programs.gamescope.enable = true;
-	programs.gamescope.capSysNice = true;
-
-	zramSwap = {
-		enable = true;
-		priority = 100;
-		algorithm = "zstd";
-		memoryPercent = 30;   # Lower CPU overhead during gaming
-	};
 
 	powerManagement.enable = true;
 
@@ -57,7 +36,6 @@
 
 		# Clear Linux-style optimizations for latency/throughput balance
 		"vm.page-cluster=0"            # Reduce NUMA pressure
-		"kernel.nmi_watchdog=0"        # Disable NMI watchdog
 		"kernel.sched_migration_cost_ns=500000" # Faster task migration
 	];
 

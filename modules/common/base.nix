@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 # Base system config shared by all hosts
 {
 	imports = [
@@ -69,6 +69,16 @@
 		blueman
 		pwvucontrol
 	];
+
+	# Electron/Wayland support (Hermes desktop, VS Code, etc.)
+	environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+	zramSwap = {
+		enable = true;
+		priority = 100;
+		algorithm = "zstd";
+		memoryPercent = lib.mkDefault 30;
+	};
 
 	system.stateVersion = "26.05";
 

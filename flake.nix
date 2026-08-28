@@ -18,10 +18,6 @@
 			url = "github:nix-community/stylix/release-26.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-		quickshell = {
-			url = "github:quickshell-mirror/quickshell/d99d87d5e5ec4e696815348692fdaaf0b6be1b2c";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
 		msnap = {
 			url = "github:xtheeq/msnap";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -37,10 +33,11 @@
 		# fresh llama.cpp for MiniCPM5 tokenizer support (stable 26.05 build is too old)
 		llama-cpp = {
 			url = "github:ggml-org/llama.cpp";
+			inputs.nixpkgs.follows = "nixpkgs";
 		};
 	};
 
-	outputs = inputs@{ self, nixpkgs, home-manager, stylix, mangowm, nvf, quickshell, msnap, zen-browser, firefox-addons, llama-cpp, ... }:
+	outputs = inputs@{ nixpkgs, home-manager, stylix, mangowm, nvf, msnap, zen-browser, firefox-addons, llama-cpp, ... }:
 	let
 		system = "x86_64-linux";
 
@@ -90,7 +87,7 @@
 						zen-browser.homeModules.beta
 					]; };
 					home-manager.backupFileExtension = "backup";
-					home-manager.extraSpecialArgs = { inherit nvf quickshell mangowm msnap firefox-addons; };
+					home-manager.extraSpecialArgs = { inherit nvf mangowm msnap firefox-addons; };
 				}
 			];
 		};
@@ -102,7 +99,7 @@
 				mangowm.hmModules.mango
 				zen-browser.homeModules.beta
 			];
-			extraSpecialArgs = { inherit nvf quickshell mangowm msnap firefox-addons; };
+			extraSpecialArgs = { inherit nvf mangowm msnap firefox-addons; };
 		};
 	in {
 		nixosConfigurations = {
