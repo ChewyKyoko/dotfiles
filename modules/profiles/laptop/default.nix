@@ -78,12 +78,4 @@
 			energy_performance_preference = "performance";    # Max performance when charging
 		};
 	};
-
-	# Additional HWP tuning via sysfs (applied after auto-cpufreq)
-	systemd.services.auto-cpufreq.postStart = ''
-		for cpu in /sys/devices/system/cpu/cpu[0-9]*/cpufreq; do
-			[ -f "$cpu/energy_performance_preference" ] && \
-				echo "balance_power" > "$cpu/energy_performance_preference" 2>/dev/null || true
-		done
-	'';
 }

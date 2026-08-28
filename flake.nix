@@ -34,9 +34,13 @@
 			url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		# fresh llama.cpp for MiniCPM5 tokenizer support (stable 26.05 build is too old)
+		llama-cpp = {
+			url = "github:ggml-org/llama.cpp";
+		};
 	};
 
-	outputs = inputs@{ self, nixpkgs, home-manager, stylix, mangowm, nvf, quickshell, msnap, zen-browser, firefox-addons, ... }:
+	outputs = inputs@{ self, nixpkgs, home-manager, stylix, mangowm, nvf, quickshell, msnap, zen-browser, firefox-addons, llama-cpp, ... }:
 	let
 		system = "x86_64-linux";
 
@@ -51,6 +55,10 @@
 					xorg = {
 						inherit (prev) libxcb xcbutilwm;
 					};
+				})
+				(final: prev: {
+					# upstream llama.cpp flake, vulkan build — replaces the stale nixpkgs one
+					llama-cpp-vulkan = llama-cpp.packages.${system}.vulkan;
 				})
 				(final: prev: {
 					gpu-screen-recorder = prev.gpu-screen-recorder.overrideAttrs (old: {
