@@ -18,10 +18,6 @@
 
 	services.thermald.enable = true;
 
-	# Systems with a dedicated GPU can optimise battery life with
-	# hardware.nvidia.prime.offload.enable = true;
-	# This is NOT enabled on Sakura (Intel iGPU only).
-
 	# Meteor Lake power-saver kernel parameters
 	# Reference: https://blog.fsck.com/agent-blog/2026/03/30/linux-power-tuning-meteor-lake/
 	boot.kernelParams = [

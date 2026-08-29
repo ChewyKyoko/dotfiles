@@ -61,7 +61,6 @@ in
 	programs.gamemode.enable = true;
 	programs.gamemode.settings.general.inhibit_screensaver = 0;
 
-	# Gamescope micro-compositor for gaming
 	programs.gamescope.enable = true;
 	programs.gamescope.capSysNice = true;
 
@@ -133,7 +132,7 @@ in
 		source = "${pkgs.gpu-screen-recorder}/bin/.wrapped/gpu-screen-recorder";
 	};
 
-	# ── Lock screen (enfield lock) ───────────────────────────
+	# Lock screen + Qt deps (quickshell needs qtmultimedia for the lock video)
 	environment.systemPackages = [
 		enfield-lock
 		pkgs.kdePackages.qtmultimedia
@@ -147,7 +146,6 @@ in
 		material-symbols
 	];
 
-	# ── Qt platform theming ────────────────────────────────────
 	# stylix.targets.qt sets platformTheme = "qt5ct" automatically
 	qt.enable = true;
 	qt.style = lib.mkDefault "adwaita-dark";

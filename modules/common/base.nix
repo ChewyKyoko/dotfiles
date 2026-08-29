@@ -50,7 +50,6 @@
 		'';
 	};
 	documentation.enable = false;
-	# allowUnfree is configured in the pkgs instance creation in flake.nix
 
 	# Required for dconf settings (GTK apps, etc.). Without this,
 	# GUI apps can hang on launch waiting for the dconf service.

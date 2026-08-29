@@ -1,5 +1,4 @@
 { config, lib, ... }:
-# Steam toggle: enable/disable per host
 {
 	options.desktop.steam.enable = lib.mkEnableOption "Steam support";
 

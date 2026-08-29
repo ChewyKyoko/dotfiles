@@ -4,11 +4,9 @@
 # Trimmed for a smooth-running desktop: no oops=panic, no page_poison,
 # io_uring left enabled (Proton/Steam), perf/ptrace usable for dev.
 {
-	# ── Kernel image protection ─────────────────────────────
 	# Prevents replacing the running kernel image (kexec) + hibernation.
 	security.protectKernelImage = true;
 
-	# ── Kernel boot parameters ──────────────────────────────
 	boot.kernelParams = [
 		"slab_nomerge"
 		"page_alloc.shuffle=1"
@@ -16,7 +14,7 @@
 		"vsyscall=none"
 	];
 
-	# ── Kernel modules — blacklist obscure/rarely-audited attack surface ──
+	# Obscure/rarely-audited attack surface.
 	boot.blacklistedKernelModules = [
 		# Obscure network protocols
 		"ax25"
@@ -50,9 +48,8 @@
 		"hpfs"
 	];
 
-	# ── Sysctl hardening ─────────────────────────────────────
+	# Hide kernel pointers even for CAP_SYSLOG
 	boot.kernel.sysctl = {
-		# Hide kernel pointers even for CAP_SYSLOG
 		"kernel.kptr_restrict" = "2";
 		# Lock down dmesg (boot addresses, module versions)
 		"kernel.dmesg_restrict" = 1;
@@ -73,7 +70,6 @@
 		# TTY line discipline autoload (CAP_SYS_MODULE gate)
 		"dev.tty.ldisc_autoload" = 0;
 
-		# ── Network sysctl hardening ─────────────────────────────
 		# Strict reverse path filtering (IP spoofing)
 		"net.ipv4.conf.all.rp_filter" = 1;
 		"net.ipv4.conf.default.rp_filter" = 1;

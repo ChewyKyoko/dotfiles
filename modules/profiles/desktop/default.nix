@@ -13,10 +13,8 @@
 
 	networking.hostName = "RoundBox";
 
-	# Desktop-specific optimizations
 	zramSwap.memoryPercent = 25;
 
-	# Gaming optimizations for desktop (unique to desktop)
 	boot.kernel.sysctl = {
 		"kernel.sched_latency_ns" = 1000000;
 	};

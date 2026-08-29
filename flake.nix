@@ -45,7 +45,6 @@
 			inherit system;
 			config = {
 				allowUnfree = true;
-				# ponytail: allowAliases=true needed for wlroots attr
 			};
 			overlays = [
 				(final: prev: {
